@@ -1,0 +1,15 @@
+# deployment-staging.yml
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: staging
+endpoint_name: churn-prediction-endpoint
+# This tells the deployment which registered model to use.
+# You will register a model with this name and version in the next phase.
+model: azureml:churn-rf:1 
+# Points to the folder containing your scoring script.
+code_configuration:
+  code: .
+  scoring_script: score.py
+# Specifies the software and hardware for the server.
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
+instance_type: Standard_DS2_v2
+instance_count: 1

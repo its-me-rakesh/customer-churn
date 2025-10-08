@@ -1,0 +1,26 @@
+# train-job.yml
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+# This command runs your training script with specified arguments.
+command: >-
+  python train.py 
+  --data_path ${{inputs.training_data}} 
+  --model_dir ${{outputs.model_output}}
+# Defines the input data for the job.
+inputs:
+  training_data:
+    type: uri_file
+    # This path points to the data asset you created in Azure in Phase 2.
+    path: azureml:churn-data:1 
+# Specifies that all files in the current directory should be uploaded for the job.
+code: .
+# Defines the software environment (Python, scikit-learn, etc.).
+environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu@latest
+# Specifies the compute hardware to run the job on.
+compute: azureml:cpu-cluster
+# Defines an output folder to save the trained model.
+outputs:
+  model_output:
+    type: uri_folder
+display_name: churn-prediction-training
+experiment_name: churn-prediction
+description: Training a churn prediction model.
